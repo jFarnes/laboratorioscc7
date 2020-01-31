@@ -1,0 +1,24 @@
+1) Thread y Proceso
+    a) ¿Qué es un Thread?
+        Un thread es una ampliacion del concepto multitarea, si bien multitarea se refiere a la capacidad de un sistema para ejecutar varios problemas a la vez
+        en un comienzo esto hacia referencia a que mas de una aplicacion se estuviera ejecutando de manera concurrente, sin embargo se hizo notaria la necesidad de 
+        que una misma aplicacion hiciera varias cosas a la vez, entonces nace el concepto de un @Thread
+    b) ¿Qué es un Process?
+        Se refiere a las instrucciones que se ejecutaran en el micropocesador mientras lee un programa determinado. Esto tambien implica a la memoria reservada y
+        sus contenidos, el estado de ejecucion en determinado momento y la informacion que permite al sistema operativo planificar.
+    c) ¿Cuáles son sus diferencias?
+        Ambos son secuencias de ejecucion independientes. La diferencia yace en que un thread corre en un espacio de memoria compartida mientras que varios procesos
+        corren en diferentes secciones de memoria.
+2) ¿Qué es Multi-Threading?
+    Es la habilidad de un CPU para proveer varios threads de ejecucion concurrente, que sean soportados por el sistema opereativo.
+3) ¿Qué es Multi-Processing?
+    Es el uso de 2 o mas CPUs con un mismo sistema de computadora. Tambien se refiere a la habilidad de un sistema en soportar mas de un procesador con la habilidad de
+    alojar varias tareas entre los procesadores.
+4) En un CPU single-core.
+    a) ¿Cuál es la cantidad de Threads y/o Process que puede soportar ese tipo de procesador?
+        Para un single-core CPU se tienen 2 threads y varios procesos (aunque el CPU maneje un proceso a la vez).
+    b) ¿De qué depende la cantidad de Threads y/o Process en el CPU?
+    La cantidad de threads depende de cuantos sockets contiene fisicamente (2 threads por socket de CPU) y un proceso por cada CPU fisico que dispone el OS.
+    c) ¿Si fuera Multi-core, tiene más Threads y/o Process,explique tomando un CPU con esa característica?
+        Si, se tiene 2 threads x core y 1 proceso independiente por cada core de CPU, sin embargo cada cpu se puede turnar para atender varios procesos (Round robin) 
+        de manera que la ilusion de multithreading y multiprocessing es tangible por tener habilidad de manejar varias tareas simultaneamente (Independientes en cada corem)
