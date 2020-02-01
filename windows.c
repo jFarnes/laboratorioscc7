@@ -1,5 +1,7 @@
-#include <cstdlib>
-#include <iostream>
+//#include <cstdlib>
+#include<stdlib.h>
+//#include <iostream>
+#include <stdio.h>
 #include <windows.h>
 #include <stdio.h>
 using namespace std;

@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <string.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
 int main(){
 	pid_t pid;
 	pid = fork(); /* fork a child process */
