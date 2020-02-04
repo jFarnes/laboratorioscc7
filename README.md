@@ -3,7 +3,7 @@ Laboratorios clase cc7
 Laboratorio
 Descripción de Creación de Procesos:
 
-                    En Linux
+                                                En Linux
 Los procesos creados con la función fork(), después de crear
 un nuevo Child process , ambos procesos (Child and Parent)
 ejecutarán la siguiente instrucción después del Syscall. Un
@@ -15,7 +15,7 @@ llamado crea un subproceso que ejecuta ls ( l i s t files and
 documents).
 
 
-                    En Windows
+                                               En Windows
 Ahora analicemos la creación de procesos en Windows. Los
 procesos son creados utilizando el API Win32, con la función
 CreateProcess() , y se diferencia del fork() en el hecho que en
@@ -49,7 +49,7 @@ caso se está levantando una instancia del mspaint.exe .
 
 
 
-                     Actividades:
+                                                 Actividades:
 Coloque sus respuestas en un archivo .txt ( respuestas.txt )
 Procesos en Windows:
 1. ¿Cuál es el resultado de este programa?
