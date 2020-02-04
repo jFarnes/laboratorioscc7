@@ -1,0 +1,10 @@
+Procesos en Windows:
+1. Este código abre microsoft paint, en blanco.
+3. La relación del árbol de procesos para abrir microsfoft paint (mspaint.exe), se abre como si fuera un subproceso de 
+	Devcpp.exe y no como un proceso independiente, significa que está heredando direcciones de memoria del proceso que 
+	lo está invocando. 
+4. El proceso mspaint.exe asociado a devcpp.exe sigue corriendo a pesar de que la consola asociada a su proceso fue cerrada
+	Esto sigue funcionando porque el bloque inicial que ejecuta este código ya fue usado para cargar el programa a memoria
+	por lo que, el programa no termina su ejecución al momento de cerrar la consola.
+5. Al obviar la fucnión WaitForSingleObject() el proceso sigue su curso como lo haría normalmente pero, esta vez el programa se ejecuta
+	como un proceso independiente de su padre (como si se hubiera ejecutado la función directamente como un programa de Windows)
