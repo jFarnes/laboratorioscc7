@@ -1,10 +1,23 @@
 Procesos en Windows:
-1. Este código abre microsoft paint, en blanco.
-3. La relación del árbol de procesos para abrir microsfoft paint (mspaint.exe), se abre como si fuera un subproceso de 
-	Devcpp.exe y no como un proceso independiente, significa que está heredando direcciones de memoria del proceso que 
-	lo está invocando. 
+1. Este codigo abre microsoft paint, en blanco.
+3. La relacion del arbol de procesos para abrir microsfoft paint (mspaint.exe), se abre como si fuera un subproceso de 
+	Devcpp.exe y no como un proceso independiente, significa que esta heredando direcciones de memoria del proceso que 
+	lo esta invocando. 
 4. El proceso mspaint.exe asociado a devcpp.exe sigue corriendo a pesar de que la consola asociada a su proceso fue cerrada
-	Esto sigue funcionando porque el bloque inicial que ejecuta este código ya fue usado para cargar el programa a memoria
-	por lo que, el programa no termina su ejecución al momento de cerrar la consola.
-5. Al obviar la fucnión WaitForSingleObject() el proceso sigue su curso como lo haría normalmente pero, esta vez el programa se ejecuta
-	como un proceso independiente de su padre (como si se hubiera ejecutado la función directamente como un programa de Windows)
+	Esto sigue funcionando porque el bloque inicial que ejecuta este codigo ya fue usado para cargar el programa a memoria
+	por lo que, el programa no termina su ejecucion al momento de cerrar la consola.
+5. Al obviar la fucnion WaitForSingleObject() el proceso sigue su curso como lo hara normalmente pero, esta vez el programa se ejecuta
+	como un proceso independiente de su padre (como si se hubiera ejecutado la funcion directamente como un programa de Windows)
+6. De no estar presentes puede provocar que se pierda sincronia en los proceso o, podria crear comportamientos no deseado ya que
+	al no estar sincronizados, uno puede terminar antes que otro proceso y si este ejecutara alguna accion con informacion necesaria
+	del proceso que aun no ha terminado de ejecutar, presentaria problemas.
+	
+Procesos en Linux
+1. Se crea un proceso y un subproceso, con impresiones a consola en el orden respectivamente y ejecuta el comando ls en el root actual.
+2. Se crea un subproceso con la instruccion "pid = fork();", en el condicional se captura alguna excepcion en caso la creacion de 
+	problema, de caso contrario se procede a crear el subproceso y una vez el subproceso termina, se imprime "Child complete: I'll never join you"
+3. Al comentar la instruccion de wait(null)	se pierde la sincornia entre los procesos
+4. El primer if valida que la creacion haya sido exitosa de lo contrario, levanta una exepcion acorde. el segundo reconoce el pid, el cual
+	si es = 0 es tomado como el subproceso y por eliminacion, el ultimo if controla al proceso padre.
+5. "fork" se puede considerar como una interpretacion de "forjar", que en interpretacion literal seria "forjar un subproceso" entonces, fork crea
+	un nuevo proceso y en el, ejecuta execlp el cual ejecuta la instruccion de "list" que muestra todos los archivos del directorio actual. 
