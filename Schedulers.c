@@ -3,6 +3,41 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+struct processParameters {
+	int AT;
+	int BT;
+	int priority;
+};
+
+struct processParameters p00 = {0,5,1};
+struct processParameters p01 = {1,5,1};
+struct processParameters p02 = {2,5,1};
+struct processParameters p03 = {3,5,1};
+struct processParameters p04 = {4,5,1};
+struct processParameters p05 = {0,8,2};
+struct processParameters p06 = {1,10,2};
+struct processParameters p07 = {2,7,2};
+struct processParameters p08 = {0,8,3};
+struct processParameters p09 = {3,6,2};
+struct processParameters p10 = {7,3,1};
+struct processParameters p11 = {9,5,2};
+struct processParameters p12 = {12,3,1};
+struct processParameters p13 = {0,7,3};
+struct processParameters p14 = {2,4,3};
+struct processParameters p15 = {4,1,3};
+struct processParameters p16 = {5,4,3};
+struct processParameters p17 = {0,7,1};
+struct processParameters p18 = {2,3,1};
+struct processParameters p19 = {3,5,1};
+struct processParameters p20 = {6,4,1};
+struct processParameters p21 = {0,4,1};
+struct processParameters p22 = {0,3,1};
+struct processParameters p23 = {0,8,2};
+struct processParameters p24 = {10,5,1};
+struct processParameters p25 = {0,10,1};
+struct processParameters p26 = {0,2,1};
+struct processParameters p27 = {0,7,2};
+struct processParameters p28 = {7,6,1};
 
 void output(void *vargp) {
 	printf("|-------|-------|-------|-------|-------|-------|-------|-------|-------| \n");
@@ -42,6 +77,10 @@ int menu(){
 int main ( int argc , char * argv []) {
 	int op = 9;
 	pid_t pid;
+
+	printf("process P25 AT time is: ");
+	printf("%d \n", p24.AT);
+
 	while (op > 0){
 		op = menu();
 		printf("Procesando opción: %d\n", op);
