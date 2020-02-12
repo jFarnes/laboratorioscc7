@@ -1,3 +1,7 @@
+//Para compilar Scheulers.c escribimos en consola
+//gcc -o Schedulers Schedulers.c
+//./Schedulers
+
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -9,7 +13,8 @@ struct processParameters {
 	int priority;
 };
 
-struct processParameters p00 = {0,5,1};
+struct processParameters arr_process[29];
+
 struct processParameters p01 = {1,5,1};
 struct processParameters p02 = {2,5,1};
 struct processParameters p03 = {3,5,1};
@@ -78,8 +83,15 @@ int main ( int argc , char * argv []) {
 	int op = 9;
 	pid_t pid;
 
+	arr_process[0].AT = 0;
+	arr_process[0].BT = 5;
+	arr_process[0].priority = 1;
+
 	printf("process P25 AT time is: ");
-	printf("%d \n", p24.AT);
+	printf("%d \n", arr_process[0].AT);
+	printf("%d \n", arr_process[0].BT);
+	printf("%d \n", arr_process[0].priority);
+
 
 	while (op > 0){
 		op = menu();
