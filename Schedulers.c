@@ -1,6 +1,6 @@
 //Para compilar Scheulers.c escribimos en consola
 //gcc -o Schedulers Schedulers.c
-//./Schedulers
+//./Schedulers~
 
 #include <sys/types.h>
 #include <unistd.h>
@@ -8,41 +8,10 @@
 #include <stdlib.h>
 
 struct processParameters {
-	int AT;
-	int BT;
-	int priority;
+	int AT,BT,priority,ET,WT,RT,TT,TH;
 };
 
 struct processParameters arr_process[29];
-
-struct processParameters p01 = {1,5,1};
-struct processParameters p02 = {2,5,1};
-struct processParameters p03 = {3,5,1};
-struct processParameters p04 = {4,5,1};
-struct processParameters p05 = {0,8,2};
-struct processParameters p06 = {1,10,2};
-struct processParameters p07 = {2,7,2};
-struct processParameters p08 = {0,8,3};
-struct processParameters p09 = {3,6,2};
-struct processParameters p10 = {7,3,1};
-struct processParameters p11 = {9,5,2};
-struct processParameters p12 = {12,3,1};
-struct processParameters p13 = {0,7,3};
-struct processParameters p14 = {2,4,3};
-struct processParameters p15 = {4,1,3};
-struct processParameters p16 = {5,4,3};
-struct processParameters p17 = {0,7,1};
-struct processParameters p18 = {2,3,1};
-struct processParameters p19 = {3,5,1};
-struct processParameters p20 = {6,4,1};
-struct processParameters p21 = {0,4,1};
-struct processParameters p22 = {0,3,1};
-struct processParameters p23 = {0,8,2};
-struct processParameters p24 = {10,5,1};
-struct processParameters p25 = {0,10,1};
-struct processParameters p26 = {0,2,1};
-struct processParameters p27 = {0,7,2};
-struct processParameters p28 = {7,6,1};
 
 void output(void *vargp) {
 	printf("|-------|-------|-------|-------|-------|-------|-------|-------|-------| \n");
@@ -50,9 +19,15 @@ void output(void *vargp) {
 	printf("|-------|-------|-------|-------|-------|-------|-------|-------|-------| \n\n");
 } 
 
+void outputFCFS(void *vargp) {
+	printf("|-------|-------|-------|-------|-------|-------|-------| \n");
+	printf("|PXX\t|AT\t|BT\t|ET\t|WT\t|RT\t|TT\t|\n");
+	printf("|-------|-------|-------|-------|-------|-------|-------| \n\n");
+} 
+
 void FCFS(void *vargp) {
 	printf(" --> FCFS\n");
-	output(0);
+	outputFCFS(0);
 } 
 
 void PS(void *vargp) {
@@ -77,20 +52,136 @@ int menu(){
 	return tmp;
 }
 
+void fillMyProcess(){
+	/*Insertando cada proceso listsado en listProcess.cpu dentro de un arreglo de structs*/
+	arr_process[0].AT = 0;
+	arr_process[0].BT = 5;
+	arr_process[0].priority = 1;
+
+	arr_process[1].AT = 1;
+	arr_process[1].BT = 5;
+	arr_process[1].priority = 1;
+
+	arr_process[2].AT = 2;
+	arr_process[2].BT = 5;
+	arr_process[2].priority = 1;
+
+	arr_process[3].AT = 3;
+	arr_process[3].BT = 5;
+	arr_process[3].priority = 1;
+
+	arr_process[4].AT = 4;
+	arr_process[4].BT = 5;
+	arr_process[4].priority = 1;
+
+	arr_process[5].AT = 0;
+	arr_process[5].BT = 8;
+	arr_process[5].priority = 2;
+
+	arr_process[6].AT = 1;
+	arr_process[6].BT = 10;
+	arr_process[6].priority = 2;
+
+	arr_process[7].AT = 2;
+	arr_process[7].BT = 7;
+	arr_process[7].priority = 2;
+
+	arr_process[8].AT = 0;
+	arr_process[8].BT = 8;
+	arr_process[8].priority = 3;
+
+	arr_process[9].AT = 3;
+	arr_process[9].BT = 6;
+	arr_process[9].priority = 2;
+
+	arr_process[10].AT = 7;
+	arr_process[10].BT = 3;
+	arr_process[10].priority = 1;
+
+	arr_process[11].AT = 9;
+	arr_process[11].BT = 5;
+	arr_process[11].priority = 2;
+
+	arr_process[12].AT = 12;
+	arr_process[12].BT = 3;
+	arr_process[12].priority = 1;
+
+	arr_process[13].AT = 0;
+	arr_process[13].BT = 7;
+	arr_process[13].priority = 3;
+
+	arr_process[14].AT = 2;
+	arr_process[14].BT = 4;
+	arr_process[14].priority = 3;
+
+	arr_process[15].AT = 4;
+	arr_process[15].BT = 1;
+	arr_process[15].priority = 3;
+
+	arr_process[16].AT = 5;
+	arr_process[16].BT = 4;
+	arr_process[16].priority = 3;
+
+	arr_process[17].AT = 0;
+	arr_process[17].BT = 7;
+	arr_process[17].priority = 1;
+
+	arr_process[18].AT = 2;
+	arr_process[18].BT = 3;
+	arr_process[18].priority = 1;
+
+	arr_process[19].AT = 3;
+	arr_process[19].BT = 5;
+	arr_process[19].priority = 1;
+
+	arr_process[20].AT = 6;
+	arr_process[20].BT = 4;
+	arr_process[20].priority = 1;
+
+	arr_process[21].AT = 0;
+	arr_process[21].BT = 4;
+	arr_process[21].priority = 1;
+
+	arr_process[22].AT = 0;
+	arr_process[22].BT = 3;
+	arr_process[22].priority = 1;
+
+	arr_process[23].AT = 0;
+	arr_process[23].BT = 8;
+	arr_process[23].priority = 2;
+
+	arr_process[24].AT = 10;
+	arr_process[24].BT = 5;
+	arr_process[24].priority = 1;
+
+	arr_process[25].AT = 0;
+	arr_process[25].BT = 10;
+	arr_process[25].priority = 1;
+
+	arr_process[26].AT = 0;
+	arr_process[26].BT = 2;
+	arr_process[26].priority = 1;
+
+	arr_process[27].AT = 0;
+	arr_process[27].BT = 7;
+	arr_process[27].priority = 1;
+
+	arr_process[28].AT = 7;
+	arr_process[28].BT = 6;
+	arr_process[28].priority = 1;
+}
 // C Concepts 
 // https://gist.github.com/Integralist/6c35d4f26c0c7bf5bdce7b95cfa906b3
 int main ( int argc , char * argv []) {
 	int op = 9;
 	pid_t pid;
 
-	arr_process[0].AT = 0;
-	arr_process[0].BT = 5;
-	arr_process[0].priority = 1;
 
+	fillMyProcess();
 	printf("process P25 AT time is: ");
-	printf("%d \n", arr_process[0].AT);
-	printf("%d \n", arr_process[0].BT);
-	printf("%d \n", arr_process[0].priority);
+	printf("%d \n", arr_process[25].AT);
+	printf("%d \n", arr_process[25].BT);
+	printf("%d \n", arr_process[25].priority);
 
 
 	while (op > 0){
