@@ -6,9 +6,12 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct processParameters {
 	int AT,BT,priority,ET,WT,RT,TT,TH;
+	int QM; //quantum
+	int QU; //queue
 };
 
 struct processParameters arr_process[29];
@@ -160,7 +163,7 @@ void fillMyProcess(){
 
 	arr_process[26].AT = 0;
 	arr_process[26].BT = 2;
-	arr_process[26].priority = 1;
+	arr_process[26].priority = 2;
 
 	arr_process[27].AT = 0;
 	arr_process[27].BT = 7;
@@ -170,18 +173,29 @@ void fillMyProcess(){
 	arr_process[28].BT = 6;
 	arr_process[28].priority = 1;
 }
+
+int strucSort (const void * a, const void * b) {
+   return ( *(int*)a - *(int*)b );
+}
+
+void arrangeMyProces(){	
+	//arranging the processList.cpu into Arraving time into arr_process
+	qsort(arr_process, 29, sizeof(struct processParameters), strucSort ); 
+}
+
 // C Concepts 
 // https://gist.github.com/Integralist/6c35d4f26c0c7bf5bdce7b95cfa906b3
 int main ( int argc , char * argv []) {
 	int op = 9;
+	int i;
 	pid_t pid;
 
-
 	fillMyProcess();
-	printf("process P25 AT time is: ");
-	printf("%d \n", arr_process[25].AT);
-	printf("%d \n", arr_process[25].BT);
-	printf("%d \n", arr_process[25].priority);
+	arrangeMyProces();
+
+	for(i = 0; i< sizeof(arr_process)/sizeof(arr_process[0]) ; i++) {
+	printf("process %d %d %d %d time is:\n ", i, arr_process[i].AT, arr_process[i].BT, arr_process[i].priority);
+	}
 
 
 	while (op > 0){
