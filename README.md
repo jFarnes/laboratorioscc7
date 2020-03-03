@@ -65,14 +65,14 @@ resultados? Justifique.
 4. ¿Existen Disk Scheduling para un SSD? Justifique.
 
 Entrega:
-● El laboratorio debe ser realizado en C.
-● El laboratorio debe ser entregado por medio del GES, con
+1. El laboratorio debe ser realizado en C.
+2.  El laboratorio debe ser entregado por medio del GES, con
 todos los archivos en un ZIP. No se calificarán
 laboratorios entregados tarde o por medio de URL externo.
-● El laboratorio debe de contener un archivo Makefile ya
+3.  El laboratorio debe de contener un archivo Makefile ya
 sea que requiera o no cargar librerías para realizar la
 compilación.
-● El laboratorio puede tener una calificación de cero si no
+4.  El laboratorio puede tener una calificación de cero si no
 compila o de -100 si se detecta plagio.
 Referencia con implementaciones
 https://www.geeksforgeeks.org/disk-scheduling-algorithms/
