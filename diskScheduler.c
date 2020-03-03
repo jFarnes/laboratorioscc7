@@ -61,10 +61,34 @@ void fillTheProcessArray(int taskDelimiter){
    }
 }
 
+void FIFO(void *vargp) {
+	printf(" --> FIFO\n");
+} 
+
+void SCAN(void *vargp) {
+	printf(" --> CSCAN\n");
+} 
+
+void CSCAN(void *vargp) {
+	printf(" --> CSCAN\n");
+} 
+
+void SSTF(void *vargp) {
+	printf(" --> SSTF\n");
+} 
+
+int menu(){
+	int tmp;
+	printf("############\n1 - FIFO\n2 - SCAN\n3 - CSCAN\n4 - SSTF\n0 - EXIT\n\nSeleccione Opción: ");
+	scanf("%d", &tmp);
+	return tmp;
+}
+
 int main( ) {
 
    int numberOfTasks, startingHead; 
    char headDirection[100];
+   int op = 9;
 
    /* requesting the movement (left of right) for the head of the disk*/
    printf("Where the head should move Right(r) or Left(l):\n");
@@ -95,6 +119,31 @@ int main( ) {
    if(startingHead < 0 || startingHead > 100){
       printf("Starting head block must be whithin [1-100].\n");
    }
+
+	while (op > 0){
+		op = menu();
+		printf("Procesando opción: %d\n", op);
+		if ( op >5 || op<=0 ){
+			printf("### END ###\n");
+			break;
+		}
+		printf("### BEGIN ###\n");
+		switch(op){
+			case 1:
+			FIFO(0);
+			break;
+			case 2:
+			SCAN(0);
+			break;
+			case 3:
+			CSCAN(0);
+			break;
+			default:
+			case 4:
+			SSTF(0);
+			break;
+		}
+	}
 
    return 0;
 }
