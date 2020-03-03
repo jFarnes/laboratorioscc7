@@ -50,6 +50,24 @@ int removeData() {
    return data;  
 }
 
+int printMyArray(){
+   int data = intArray[front++];
+   int intPrint[size()];
+
+   
+   int i = 0;
+   while(i < size()) {
+      intPrint[i] = intArray[i];           
+      i++;
+   }
+
+   printf("El listado es: ");
+   for(int loop = 0; loop < size(); loop++)
+      printf("%d ", intPrint[loop]);
+   printf("\n");
+
+}
+
 void fillTheProcessArray(int taskDelimiter){
    int inputTask;
 
@@ -61,25 +79,57 @@ void fillTheProcessArray(int taskDelimiter){
    }
 }
 
-void FIFO(void *vargp) {
-	printf(" --> FIFO\n");
+float averageElements(int startingHead){
+   float collector = 0;
+
+   /* first step for the average is to susbtract the startingHead - intArray in the first position*/
+   collector = abs(startingHead - intArray[0]); 
+
+   for(int i = 0; i < size() -1 ; i++){
+      collector = collector + abs(intArray[i] - intArray[i + 1]);
+   }
+
+   return collector/size();
+}
+
+void FIFO(void *vargp, int startingHead) {
+   float average;
+	printf("First In First Out\n");
+	printf("Posicion Actual: %d\n", startingHead);
+   printMyArray();
+   average = averageElements(startingHead);
+	printf("Promedio: %.2f\n", average);
+	printf("Desviacion estandar: \n");
+
 } 
 
 void SCAN(void *vargp) {
-	printf(" --> CSCAN\n");
+	printf("Scan\n");
+	printf("Posicion Actual: \n");
+   printMyArray();
+	printf("Promedio: \n");
+	printf("Desviacion estandar: \n");
 } 
 
 void CSCAN(void *vargp) {
-	printf(" --> CSCAN\n");
+	printf("Circular Scan\n");
+	printf("Posicion Actual: \n");
+   printMyArray();
+	printf("Promedio: \n");
+	printf("Desviacion estandar: \n");
 } 
 
 void SSTF(void *vargp) {
-	printf(" --> SSTF\n");
+	printf("Shortest Seek Time First\n");
+	printf("Posicion Actual: \n");
+   printMyArray();
+	printf("Promedio: \n");
+	printf("Desviacion estandar: \n");
 } 
 
 int menu(){
 	int tmp;
-	printf("############\n1 - FIFO\n2 - SCAN\n3 - CSCAN\n4 - SSTF\n0 - EXIT\n\nSeleccione Opción: ");
+	printf("\n############\n1 - FIFO\n2 - SCAN\n3 - CSCAN\n4 - SSTF\n0 - EXIT\n\nSeleccione Opción: ");
 	scanf("%d", &tmp);
 	return tmp;
 }
@@ -124,13 +174,13 @@ int main( ) {
 		op = menu();
 		printf("Procesando opción: %d\n", op);
 		if ( op >5 || op<=0 ){
-			printf("### END ###\n");
+			printf("\n### END ###\n");
 			break;
 		}
-		printf("### BEGIN ###\n");
+		printf("\n### BEGIN ###\n");
 		switch(op){
 			case 1:
-			FIFO(0);
+			FIFO(0, startingHead);
 			break;
 			case 2:
 			SCAN(0);
