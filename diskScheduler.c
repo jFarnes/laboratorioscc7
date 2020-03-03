@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <math.h>
 
 #define MAX 100
 
@@ -78,7 +79,7 @@ void fillTheProcessArray(int taskDelimiter){
 
    }
 }
-
+/* calculating the @promeio variable*/
 float averageElements(int startingHead){
    float collector = 0;
 
@@ -92,15 +93,32 @@ float averageElements(int startingHead){
    return collector/size();
 }
 
-void FIFO(void *vargp, int startingHead) {
-   float average;
-	printf("First In First Out\n");
-	printf("Posicion Actual: %d\n", startingHead);
-   printMyArray();
-   average = averageElements(startingHead);
-	printf("Promedio: %.2f\n", average);
-	printf("Desviacion estandar: \n");
+/* calculatiing the standar deviation*/
+float standarDeviation(){
+float u, upside, output; 
 
+   for(int i = 0; i < size() ; i++){
+      u = u + intArray[i];
+   }
+
+   u = u/size();
+
+   for(int i = 0; i < size(); i++)
+   {
+      upside = upside + pow(intArray[i] - u,2);
+   }
+
+   output = sqrt(upside/(size()-1));
+
+return output;
+}
+
+void FIFO(void *vargp, int startingHead) {
+	printf("Shortest Seek Time First\n");
+	printf("Posicion Actual: \n");
+   printMyArray();
+	printf("Promedio: \n");
+	printf("Desviacion estandar: \n");
 } 
 
 void SCAN(void *vargp) {
@@ -119,12 +137,16 @@ void CSCAN(void *vargp) {
 	printf("Desviacion estandar: \n");
 } 
 
-void SSTF(void *vargp) {
-	printf("Shortest Seek Time First\n");
-	printf("Posicion Actual: \n");
+void SSTF(void *vargp, int startingHead) {
+   float average, eDeviation;
+
+	printf("First In First Out\n");
+	printf("Posicion Actual: %d\n", startingHead);
    printMyArray();
-	printf("Promedio: \n");
-	printf("Desviacion estandar: \n");
+   average = averageElements(startingHead);
+	printf("Promedio: %.2f\n", average);
+   eDeviation = standarDeviation();
+	printf("Desviacion estandar: %.2f \n", eDeviation);  
 } 
 
 int menu(){
@@ -190,7 +212,7 @@ int main( ) {
 			break;
 			default:
 			case 4:
-			SSTF(0);
+			SSTF(0, startingHead);
 			break;
 		}
 	}
