@@ -382,10 +382,6 @@ int strucSort (const void * a, const void * b) {
 void arrangeMyProces(){	
 	//arranging the processList.cpu by Arraving time into arr_process
 	qsort(arr_process, 29, sizeof(struct processParameters), strucSort ); 
-
-	/*for(int i = 0; i< sizeof(arr_process)/sizeof(arr_process[0]) ; i++) {
-	printf("process %d %d %d %d burst time is:\n ", i, arr_process[i].AT, arr_process[i].BT, arr_process[i].priority);
-	}*/
 }
 
 // C Concepts 
@@ -397,11 +393,6 @@ int main ( int argc , char * argv []) {
 
 	fillMyProcess();
 	arrangeMyProces();
-
-	/*for(i = 0; i< sizeof(arr_process)/sizeof(arr_process[0]) ; i++) {
-	printf("process %d %d burst time is:\n ", i, arr_process[i].TT);
-	}*/
-
 
 	while (op > 0){
 		op = menu();
