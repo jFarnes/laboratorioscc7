@@ -124,7 +124,7 @@ void FIFO(void *vargp, int startingHead) {
 	printf("Desviacion estandar: %.2f \n", eDeviation);  
 } 
 
-int SCAN(void *vargp) {
+int SCAN(void *vargp,int startingHead) {
 	
    char headDirection[100];
 	printf("a\n");
@@ -155,7 +155,7 @@ int SCAN(void *vargp) {
 
 } 
 
-int CSCAN(void *vargp) {
+int CSCAN(void *vargp, int startingHead) {
 
 	char headDirection[100];
    
@@ -208,13 +208,14 @@ int main( ) {
 
    int numberOfTasks, startingHead; 
    int op = 9;
-   
+
    /*Requesting the number of tasks to be in the array*/
    printf("Enter a the number of tasks to add:\n");
    scanf("%d", &numberOfTasks);
 
    if(numberOfTasks < 0 || numberOfTasks > 100){
-      printf("Number of block must be whithin [1-100].");
+      printf("Number of block must be whithin [1-100].\n");
+      return 0;
    } else if (numberOfTasks < 100 && numberOfTasks > 0)
       fillTheProcessArray(numberOfTasks);
 
@@ -239,10 +240,10 @@ int main( ) {
 			FIFO(0, startingHead);
 			break;
 			case 2:
-			SCAN(0);
+			SCAN(0, startingHead);
 			break;
 			case 3:
-			CSCAN(0);
+			CSCAN(0, startingHead);
 			break;
 			default:
 			case 4:
