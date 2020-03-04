@@ -11,6 +11,8 @@ int front = 0;
 int rear = -1;
 int itemCount = 0;
 
+/*                 This code is the data structure that stores all the process                     **/ 
+/** --------------------------------------------------------------------------------------------------- **/
 int peek() {
    return intArray[front];
 }
@@ -50,7 +52,7 @@ int removeData() {
    itemCount--;
    return data;  
 }
-
+/**--------------------------------------------------------------------------------------------------------**/
 int printMyArray(){
    int data = intArray[front++];
    int intPrint[size()];
@@ -68,7 +70,7 @@ int printMyArray(){
    printf("\n");
 
 }
-
+  
 void fillTheProcessArray(int taskDelimiter){
    int inputTask;
 
@@ -84,6 +86,7 @@ float averageElements(int startingHead){
    float collector = 0;
 
    /* first step for the average is to susbtract the startingHead - intArray in the first position*/
+
    collector = abs(startingHead - intArray[0]); 
 
    for(int i = 0; i < size() -1 ; i++){
@@ -94,50 +97,22 @@ float averageElements(int startingHead){
 }
 
 /* calculatiing the standar deviation*/
-float standarDeviation(){
-float u, upside, output; 
+float standarDeviation(int startingHead){
+float u = 0, upside = 0, temp = 0; 
+   
+   u = averageElements(startingHead);
+   upside = pow(startingHead - intArray[0]-u,2);
 
-   for(int i = 0; i < size() ; i++){
-      u = u + intArray[i];
-   }
-
-   u = u/size();
-
-   for(int i = 0; i < size(); i++)
+   for(int i = 0; i < size() - 1 ; i++)
    {
-      upside = upside + pow(intArray[i] - u,2);
+      temp = abs(intArray[i] - intArray[i + 1]);
+      upside = upside + pow( temp - u,2);
    }
 
-   output = sqrt(upside/(size()-1));
-
-return output;
+return sqrt(upside/(size() - 1));;
 }
 
 void FIFO(void *vargp, int startingHead) {
-	printf("Shortest Seek Time First\n");
-	printf("Posicion Actual: \n");
-   printMyArray();
-	printf("Promedio: \n");
-	printf("Desviacion estandar: \n");
-} 
-
-void SCAN(void *vargp) {
-	printf("Scan\n");
-	printf("Posicion Actual: \n");
-   printMyArray();
-	printf("Promedio: \n");
-	printf("Desviacion estandar: \n");
-} 
-
-void CSCAN(void *vargp) {
-	printf("Circular Scan\n");
-	printf("Posicion Actual: \n");
-   printMyArray();
-	printf("Promedio: \n");
-	printf("Desviacion estandar: \n");
-} 
-
-void SSTF(void *vargp, int startingHead) {
    float average, eDeviation;
 
 	printf("First In First Out\n");
@@ -145,7 +120,80 @@ void SSTF(void *vargp, int startingHead) {
    printMyArray();
    average = averageElements(startingHead);
 	printf("Promedio: %.2f\n", average);
-   eDeviation = standarDeviation();
+   eDeviation = standarDeviation(startingHead);
+	printf("Desviacion estandar: %.2f \n", eDeviation);  
+} 
+
+int SCAN(void *vargp) {
+	
+   char headDirection[100];
+	printf("a\n");
+
+   /* requesting the movement (left of right) for the head of the disk*/
+   printf("Where the head should move Right(r) or Left(l):\n");
+   scanf("%s", headDirection);
+
+  if(strcmp("r",headDirection) == 0){
+      printf("The head is moving right\n");
+      printf("Scan\n");
+      printf("Posicion Actual: \n");
+      printMyArray();
+      printf("Promedio: \n");
+      printf("Desviacion estandar: \n");
+   } else if(strcmp("l",headDirection) == 0){
+      printf("The head is moving left\n");
+      printf("Scan\n");
+      printf("Posicion Actual: \n");
+      printMyArray();
+      printf("Promedio: \n");
+      printf("Desviacion estandar: \n");
+   } else { 
+      printf("Wrong head direction, please input 'r' for right and 'l' for left.\n");
+      return 0;
+   }
+
+
+} 
+
+int CSCAN(void *vargp) {
+
+	char headDirection[100];
+   
+   /* requesting the movement (left of right) for the head of the disk*/
+   printf("Where the head should move Right(r) or Left(l):\n");
+   scanf("%s", headDirection);
+
+  if(strcmp("r",headDirection) == 0){
+      printf("The head is moving right\n");
+      printf("Circular Scan\n");
+      printf("Posicion Actual: \n");
+      printMyArray();
+      printf("Promedio: \n");
+      printf("Desviacion estandar: \n");      
+   } else if(strcmp("l",headDirection) == 0){
+      printf("The head is moving left\n");
+      printf("Circular Scan\n");
+      printf("Posicion Actual: \n");
+      printMyArray();
+      printf("Promedio: \n");
+      printf("Desviacion estandar: \n");        
+   } else {
+      printf("Wrong head direction, please input 'r' for right and 'l' for left.\n");
+      return 0;
+   }
+   
+
+} 
+
+void SSTF(void *vargp, int startingHead) {
+   float average, eDeviation;
+
+	printf("Shortest Seek Time First\n");
+	printf("Posicion Actual: %d\n", startingHead);
+   printMyArray();
+   average = averageElements(startingHead);
+	printf("Promedio: %.2f\n", average);
+   eDeviation = standarDeviation(startingHead);
 	printf("Desviacion estandar: %.2f \n", eDeviation);  
 } 
 
@@ -159,22 +207,8 @@ int menu(){
 int main( ) {
 
    int numberOfTasks, startingHead; 
-   char headDirection[100];
    int op = 9;
-
-   /* requesting the movement (left of right) for the head of the disk*/
-   printf("Where the head should move Right(r) or Left(l):\n");
-   scanf("%s", headDirection);
-
-  if(strcmp("r",headDirection) == 0)
-      printf("The head is moving right\n");
-   else if (strcmp("l",headDirection) == 0)
-      printf("The head is moving left\n");
-   else{
-      printf("Wrong head direction, please input 'r' for right and 'l' for left.\n");
-      return 0;
-   }
-
+   
    /*Requesting the number of tasks to be in the array*/
    printf("Enter a the number of tasks to add:\n");
    scanf("%d", &numberOfTasks);
