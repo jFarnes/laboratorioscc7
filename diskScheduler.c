@@ -54,11 +54,8 @@ int removeData() {
 }
 /**--------------------------------------------------------------------------------------------------------**/
 int printMyArray(){
-   int data = intArray[front++];
-   int intPrint[size()];
-
-   
-   int i = 0;
+   int data = intArray[front++], intPrint[size()], i =0;
+ 
    while(i < size()) {
       intPrint[i] = intArray[i];           
       i++;
