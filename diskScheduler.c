@@ -200,7 +200,6 @@ int SCAN(void *vargp,int startingHead) {
 
    /* requesting the movement (left of right) for the head of the disk*/
    printf("Where the head should move Right(r) or Left(l):\n");
-   scanf("%s", headDirection);
 
   if(strcmp("r",headDirection) == 0){
       printf("Elevator Algorithm(Scan), Head moving right\n");
