@@ -138,7 +138,7 @@ float scanArrangeLeft(int startingHead ,int pivotLocation){
    for (int i = pivotLocation + 1; i < size() -1 ; i++)
       collector = collector + abs(startingHead - intArray[i + 1]);
 
-   return collector/size();
+   return collector;
 }
 
 float scanArrangeRight(int startingHead ,int pivotLocation){
@@ -151,21 +151,48 @@ float scanArrangeRight(int startingHead ,int pivotLocation){
    for (int i = pivotLocation; i > 0 ; i--)
       collector = collector + abs(startingHead - intArray[i - 1]);
    
-   return collector/size();
+   return collector;
 }
 
-/* REFERENCE FOR DISK SCHEDULING ALGORITHMS http://www.cs.iit.edu/~cs561/cs450/disksched/disksched.html */
-void FIFO(void *vargp, int startingHead) {
-   float average, eDeviation;
+float scanCircularLeft(int startingHead, int pivotLocation){
+   
+   float collector = collector + abs(startingHead - intArray[pivotLocation]);
 
-	printf("First In First Out\n");
+   for (int i = pivotLocation; i > 0 ; i--)
+      collector = collector + abs(startingHead - intArray[i - 1]);
+
+   for (int i = size(); i > pivotLocation ; i--)
+      collector = collector + abs(startingHead - intArray[i - 1]); 
+
+   return collector;     
+}
+
+float scanCircularRight(int startingHead, int pivotLocation){
+  
+   float collector = collector + abs(startingHead - intArray[pivotLocation]);
+
+   for (int i = pivotLocation + 1; i < size() -1 ; i++)
+      collector = collector + abs(startingHead - intArray[i + 1]);
+
+   for (int i = 0 + 1; i < pivotLocation -1 ; i++)
+      collector = collector + abs(startingHead - intArray[i + 1]);
+   
+   return collector;
+}
+
+void printRepresentationDiagram(int startingHead, float average, float eDeviation){
 	printf("Posicion Actual: %d\n", startingHead);
    printMyArray();
-   average = operationsMidPoint(startingHead);
 	printf("Total seek time: %.2f\n", average);
-   eDeviation = standarDeviation(startingHead);
 	printf("Promedio: %.2f\n", average/size());
-	printf("Desviacion estandar: %.2f \n", eDeviation);  
+	printf("Desviacion estandar: %.2f \n", eDeviation);    
+}
+/* REFERENCE FOR DISK SCHEDULING ALGORITHMS http://www.cs.iit.edu/~cs561/cs450/disksched/disksched.html */
+void FIFO(void *vargp, int startingHead) {
+   float average = operationsMidPoint(startingHead), eDeviation = standarDeviation(startingHead);
+
+	printf("First In First Out\n");
+   printRepresentationDiagram(startingHead, average, eDeviation);
 } 
 /* REFERENCE FOR DISK SCHEDULING ALGORITHMS http://www.cs.iit.edu/~cs561/cs450/disksched/disksched.html */
 int SCAN(void *vargp,int startingHead) {
@@ -179,29 +206,19 @@ int SCAN(void *vargp,int startingHead) {
    scanf("%s", headDirection);
 
   if(strcmp("r",headDirection) == 0){
-      printf("The head is moving right\n");
-      printf("Elevator Algorithm(Scan)\n");
-      printf("Posicion Actual: %d \n",  startingHead);
-      printMyArray();
+      printf("Elevator Algorithm(Scan), Head moving right\n");
       midPoint = scanArrangeRight(startingHead,pivotLocation);
-      printf("Promedio: %.2f \n", midPoint);
       eDeviation = standarDeviation(startingHead);
-      printf("Desviacion estandar: %.2f \n", eDeviation);
+      printRepresentationDiagram(startingHead,midPoint,eDeviation);
    } else if(strcmp("l",headDirection) == 0){
-      printf("The head is moving left\n");
-      printf("Elevator Algorithm(Scan)\n");
-      printf("Posicion Actual: %d \n",  startingHead);
-      printMyArray();
+      printf("Elevator Algorithm(Scan), Head moving left\n");
       midPoint = scanArrangeLeft(startingHead,pivotLocation);
-      printf("Promedio: %.2f \n", midPoint);
       eDeviation = standarDeviation(startingHead);
-      printf("Desviacion estandar: %.2f \n", eDeviation);
+      printRepresentationDiagram(startingHead,midPoint,eDeviation);
    } else { 
       printf("Wrong head direction, please input 'r' for right and 'l' for left.\n");
       return 0;
    }
-
-
 } 
 
 /* REFERENCE FOR DISK SCHEDULING ALGORITHMS http://www.cs.iit.edu/~cs561/cs450/disksched/disksched.html */
@@ -216,23 +233,15 @@ int CSCAN(void *vargp, int startingHead) {
    scanf("%s", headDirection);
 
   if(strcmp("r",headDirection) == 0){
-      printf("The head is moving right\n");
-      printf("Elevator Algorithm(Scan)\n");
-      printf("Posicion Actual: %d \n",  startingHead);
-      printMyArray();
+      printf("Circular Scan(C-Scan), The head is moving right\n");
       midPoint = scanArrangeRight(startingHead,pivotLocation);
-      printf("Promedio: %.2f \n", midPoint);
       eDeviation = standarDeviation(startingHead);
-      printf("Desviacion estandar: %.2f \n", eDeviation);
+      printRepresentationDiagram(startingHead, midPoint, eDeviation);
    } else if(strcmp("l",headDirection) == 0){
-      printf("The head is moving left\n");
-      printf("Elevator Algorithm(Scan)\n");
-      printf("Posicion Actual: %d \n",  startingHead);
-      printMyArray();
-      midPoint = scanArrangeLeft(startingHead,pivotLocation);
-      printf("Promedio: %.2f \n", midPoint);
+      printf("Circular Scan(C-Scan), The head is moving left\n");
+      midPoint = scanCircularLeft(startingHead,pivotLocation);
       eDeviation = standarDeviation(startingHead);
-      printf("Desviacion estandar: %.2f \n", eDeviation);
+      printRepresentationDiagram(startingHead, midPoint, eDeviation);
    } else { 
       printf("Wrong head direction, please input 'r' for right and 'l' for left.\n");
       return 0;
@@ -241,15 +250,10 @@ int CSCAN(void *vargp, int startingHead) {
 
 /* REFERENCE FOR DISK SCHEDULING ALGORITHMS http://www.cs.iit.edu/~cs561/cs450/disksched/disksched.html */
 void SSTF(void *vargp, int startingHead) {
-   float average, eDeviation;
+   float average = operationsMidPoint(startingHead), eDeviation = standarDeviation(startingHead);;
 
 	printf("Shortest Seek Time First\n");
-	printf("Posicion Actual: %d\n", startingHead);
-   printMyArray();
-   average = operationsMidPoint(startingHead);
-	printf("Promedio: %.2f\n", average);
-   eDeviation = standarDeviation(startingHead);
-	printf("Desviacion estandar: %.2f \n", eDeviation);  
+   printRepresentationDiagram(startingHead, average, eDeviation);
 } 
 
 int menu(){
