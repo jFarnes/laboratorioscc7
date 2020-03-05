@@ -11,7 +11,7 @@ int front = 0;
 int rear = -1;
 int itemCount = 0;
 
-/*                 This code is the data structure that stores all the process                     **/ 
+/*      This code is the data structure that stores all the process list inputed by user                **/ 
 /** --------------------------------------------------------------------------------------------------- **/
 int peek() {
    return intArray[front];
@@ -82,25 +82,25 @@ void fillTheProcessArray(int taskDelimiter){
    }
 }
 /* calculating the @promeio variable*/
-float averageElements(int startingHead){
+float operationsMidPoint(int startingHead){
    float collector = 0;
 
    /* first step for the average is to susbtract the startingHead - intArray in the first position*/
 
-   collector = abs(startingHead - intArray[0]); 
+   collector = abs(intArray[0] - startingHead); 
 
    for(int i = 0; i < size() -1 ; i++){
       collector = collector + abs(intArray[i] - intArray[i + 1]);
    }
 
-   return collector/size();
+   return collector;
 }
 
-/* calculatiing the standar deviation*/
+/* calculating the standar deviation*/
 float standarDeviation(int startingHead){
-float u = 0, upside = 0, temp = 0; 
+   float u = 0, upside = 0, temp = 0; 
    
-   u = averageElements(startingHead);
+   u = operationsMidPoint(startingHead)/size();
    upside = pow(startingHead - intArray[0]-u,2);
 
    for(int i = 0; i < size() - 1 ; i++)
@@ -109,25 +109,44 @@ float u = 0, upside = 0, temp = 0;
       upside = upside + pow( temp - u,2);
    }
 
-return sqrt(upside/(size() - 1));;
+   return sqrt(upside/(size() - 1));;
 }
 
+int shortestPointToHead(int startingHead){
+   int pivot = abs(startingHead - intArray[0]);
+   int temp, pivotLocation; 
+
+   for (int i = 1; i < size(); i++)
+   {
+      temp = abs(startingHead - intArray[i]);
+      if(temp < pivot){
+         pivot = temp;
+         pivotLocation = i;
+      }
+   }
+
+   return pivotLocation;
+}
+
+/* REFERENCE FOR DISK SCHEDULING ALGORITHMS http://www.cs.iit.edu/~cs561/cs450/disksched/disksched.html */
 void FIFO(void *vargp, int startingHead) {
    float average, eDeviation;
 
 	printf("First In First Out\n");
 	printf("Posicion Actual: %d\n", startingHead);
    printMyArray();
-   average = averageElements(startingHead);
-	printf("Promedio: %.2f\n", average);
+   average = operationsMidPoint(startingHead);
+	printf("Total seek time: %.2f\n", average);
    eDeviation = standarDeviation(startingHead);
+	printf("Promedio: %.2f\n", average/size());
 	printf("Desviacion estandar: %.2f \n", eDeviation);  
 } 
-
+/* REFERENCE FOR DISK SCHEDULING ALGORITHMS http://www.cs.iit.edu/~cs561/cs450/disksched/disksched.html */
 int SCAN(void *vargp,int startingHead) {
 	
    char headDirection[100];
-	printf("a\n");
+   int pivotLocation = shortestPointToHead(startingHead);
+   printf("the location pivote is in array position %d\n", pivotLocation);
 
    /* requesting the movement (left of right) for the head of the disk*/
    printf("Where the head should move Right(r) or Left(l):\n");
@@ -155,6 +174,7 @@ int SCAN(void *vargp,int startingHead) {
 
 } 
 
+/* REFERENCE FOR DISK SCHEDULING ALGORITHMS http://www.cs.iit.edu/~cs561/cs450/disksched/disksched.html */
 int CSCAN(void *vargp, int startingHead) {
 
 	char headDirection[100];
@@ -185,13 +205,14 @@ int CSCAN(void *vargp, int startingHead) {
 
 } 
 
+/* REFERENCE FOR DISK SCHEDULING ALGORITHMS http://www.cs.iit.edu/~cs561/cs450/disksched/disksched.html */
 void SSTF(void *vargp, int startingHead) {
    float average, eDeviation;
 
 	printf("Shortest Seek Time First\n");
 	printf("Posicion Actual: %d\n", startingHead);
    printMyArray();
-   average = averageElements(startingHead);
+   average = operationsMidPoint(startingHead);
 	printf("Promedio: %.2f\n", average);
    eDeviation = standarDeviation(startingHead);
 	printf("Desviacion estandar: %.2f \n", eDeviation);  
