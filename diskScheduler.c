@@ -83,7 +83,7 @@ void fillTheProcessArray(int taskDelimiter){
 }
 /* calculating the @promeio variable*/
 float operationsMidPoint(int startingHead){
-   float collector = 0;
+   float collector = 0.00;
 
    /* first step for the average is to susbtract the startingHead - intArray in the first position*/
 
@@ -128,6 +128,32 @@ int shortestPointToHead(int startingHead){
    return pivotLocation;
 }
 
+float scanArrangeLeft(int startingHead ,int pivotLocation){
+
+   float collector = collector + abs(startingHead - intArray[pivotLocation]);
+
+   for (int i = pivotLocation; i > 0 ; i--)
+      collector = collector + abs(startingHead - intArray[i - 1]);
+   
+   for (int i = pivotLocation + 1; i < size() -1 ; i++)
+      collector = collector + abs(startingHead - intArray[i + 1]);
+
+   return collector/size();
+}
+
+float scanArrangeRight(int startingHead ,int pivotLocation){
+
+   float collector = collector + abs(startingHead - intArray[pivotLocation]);
+
+   for (int i = pivotLocation + 1; i < size() -1 ; i++)
+      collector = collector + abs(startingHead - intArray[i + 1]);
+
+   for (int i = pivotLocation; i > 0 ; i--)
+      collector = collector + abs(startingHead - intArray[i - 1]);
+   
+   return collector/size();
+}
+
 /* REFERENCE FOR DISK SCHEDULING ALGORITHMS http://www.cs.iit.edu/~cs561/cs450/disksched/disksched.html */
 void FIFO(void *vargp, int startingHead) {
    float average, eDeviation;
@@ -146,7 +172,7 @@ int SCAN(void *vargp,int startingHead) {
 	
    char headDirection[100];
    int pivotLocation = shortestPointToHead(startingHead);
-   printf("the location pivote is in array position %d\n", pivotLocation);
+   float midPoint, eDeviation;
 
    /* requesting the movement (left of right) for the head of the disk*/
    printf("Where the head should move Right(r) or Left(l):\n");
@@ -154,18 +180,22 @@ int SCAN(void *vargp,int startingHead) {
 
   if(strcmp("r",headDirection) == 0){
       printf("The head is moving right\n");
-      printf("Scan\n");
-      printf("Posicion Actual: \n");
+      printf("Elevator Algorithm(Scan)\n");
+      printf("Posicion Actual: %d \n",  startingHead);
       printMyArray();
-      printf("Promedio: \n");
-      printf("Desviacion estandar: \n");
+      midPoint = scanArrangeRight(startingHead,pivotLocation);
+      printf("Promedio: %.2f \n", midPoint);
+      eDeviation = standarDeviation(startingHead);
+      printf("Desviacion estandar: %.2f \n", eDeviation);
    } else if(strcmp("l",headDirection) == 0){
       printf("The head is moving left\n");
-      printf("Scan\n");
-      printf("Posicion Actual: \n");
+      printf("Elevator Algorithm(Scan)\n");
+      printf("Posicion Actual: %d \n",  startingHead);
       printMyArray();
-      printf("Promedio: \n");
-      printf("Desviacion estandar: \n");
+      midPoint = scanArrangeLeft(startingHead,pivotLocation);
+      printf("Promedio: %.2f \n", midPoint);
+      eDeviation = standarDeviation(startingHead);
+      printf("Desviacion estandar: %.2f \n", eDeviation);
    } else { 
       printf("Wrong head direction, please input 'r' for right and 'l' for left.\n");
       return 0;
@@ -177,32 +207,36 @@ int SCAN(void *vargp,int startingHead) {
 /* REFERENCE FOR DISK SCHEDULING ALGORITHMS http://www.cs.iit.edu/~cs561/cs450/disksched/disksched.html */
 int CSCAN(void *vargp, int startingHead) {
 
-	char headDirection[100];
-   
+   char headDirection[100];
+   int pivotLocation = shortestPointToHead(startingHead);
+   float midPoint, eDeviation;
+
    /* requesting the movement (left of right) for the head of the disk*/
    printf("Where the head should move Right(r) or Left(l):\n");
    scanf("%s", headDirection);
 
   if(strcmp("r",headDirection) == 0){
       printf("The head is moving right\n");
-      printf("Circular Scan\n");
-      printf("Posicion Actual: \n");
+      printf("Elevator Algorithm(Scan)\n");
+      printf("Posicion Actual: %d \n",  startingHead);
       printMyArray();
-      printf("Promedio: \n");
-      printf("Desviacion estandar: \n");      
+      midPoint = scanArrangeRight(startingHead,pivotLocation);
+      printf("Promedio: %.2f \n", midPoint);
+      eDeviation = standarDeviation(startingHead);
+      printf("Desviacion estandar: %.2f \n", eDeviation);
    } else if(strcmp("l",headDirection) == 0){
       printf("The head is moving left\n");
-      printf("Circular Scan\n");
-      printf("Posicion Actual: \n");
+      printf("Elevator Algorithm(Scan)\n");
+      printf("Posicion Actual: %d \n",  startingHead);
       printMyArray();
-      printf("Promedio: \n");
-      printf("Desviacion estandar: \n");        
-   } else {
+      midPoint = scanArrangeLeft(startingHead,pivotLocation);
+      printf("Promedio: %.2f \n", midPoint);
+      eDeviation = standarDeviation(startingHead);
+      printf("Desviacion estandar: %.2f \n", eDeviation);
+   } else { 
       printf("Wrong head direction, please input 'r' for right and 'l' for left.\n");
       return 0;
    }
-   
-
 } 
 
 /* REFERENCE FOR DISK SCHEDULING ALGORITHMS http://www.cs.iit.edu/~cs561/cs450/disksched/disksched.html */
