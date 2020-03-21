@@ -190,10 +190,10 @@ int main( ) {
 		printf("\n### BEGIN ###\n");
 		switch(op){
 			case 1:  
-      printf("\nNH3 + O2 -> Agua?\n");
-      printf("Cuantas reacciones crear?: ");
-      scanf("%d", &reacciones);
-			createReactions(reacciones);
+        printf("\nNH3 + O2 -> Agua?\n");
+        printf("Cuantas reacciones crear?: ");
+        scanf("%d", &reacciones);
+        createReactions(reacciones);
 			break;
 		}
 	}
