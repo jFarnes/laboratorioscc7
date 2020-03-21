@@ -1,3 +1,5 @@
-Thread : diskScheduler.c 
-	gcc -o diskScheduler diskScheduler.c -lm
-	./diskScheduler
+all:
+	gcc -pthread alquimia.c -o alquimia.o && ./alquimia.o
+
+clean:
+	rm -f *.o
